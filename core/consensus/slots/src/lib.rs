@@ -206,7 +206,7 @@ pub trait SimpleSlotWorker<B: BlockT> {
 			// minor hack since we don't have access to the timestamp
 			// that is actually set by the proposer.
 			let slot_after_building = SignedDuration::default().slot_now(slot_duration);
-			if slot_after_building != slot_number {
+			if slot_after_building <= slot_number + 20 {
 				info!("Discarding proposal for slot {}; block production took too long", slot_number);
 				telemetry!(CONSENSUS_INFO; "slots.discarding_proposal_took_too_long";
 					"slot" => slot_number,
